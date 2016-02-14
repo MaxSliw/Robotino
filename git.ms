@@ -27,7 +27,7 @@ function load(){
   sleep 1
   echo -ne '[##############################(100%)]\r'
   sleep 1
-  exec ./github.ss
+  exec bash git.ms
 }
 function init(){
   read -p "$(tput sgr0)Votre pseudo : " pseudo
@@ -67,7 +67,7 @@ function commande(){
       firefox "$(git config --get remote.origin.url)"
     elif [ $ordre == "log" ]; then
       git log $other
-      ./github.ss
+      bash git.ms
     elif [ $ordre == "check" ]; then
       git checkout $other
     elif [ $ordre == "mtp" ]; then
@@ -105,6 +105,15 @@ then
   email=$(awk 'NR==2' .git/value_script.ss)
   printf "${GREY}Dossier de travail : $vdir\nUtilisateur : $user"
 else
-  printf "${GREY}Pour commencer l'installation entrer la commande [init]\n"
+  if test -e "clone"
+  then
+    url_github=$(awk 'NR==1' clone)
+    git clone $url_github
+    sudo cp git.ms Robotino/; cd Robotino/
+    sudo chmod -x git.ms
+    sudo bash git.ms
+  else
+    printf "${GREY}Pour commencer l'installation entrer la commande [init]\n"
+  fi
 fi
 commande
