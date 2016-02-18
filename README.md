@@ -11,7 +11,7 @@ void setup {
 
 - **3e séance**  > Étude des robots domestiques en général 
 
-- **4e séance**  > Étude du mode d'emploie et des fonctions alitées, commencement des chaines d'information et d'énergie 
+- **4e séance**  > Étude du mode d'emploi et des fonctions alitées, commencement des chaines d'information et d'énergie 
 
 - **5e séance**  > Démontage du robot et finalisation des chaines d'information et d'énergie 
 
