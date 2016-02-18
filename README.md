@@ -7,11 +7,11 @@ void setup {
 ```
 - **1er séance** > Découverte du projet
 
-- **2e séance**  > Répartition des tâches et ouverture des robots commerciale 
+- **2e séance**  > Répartition des tâches et ouverture des robots commerciaux
 
 - **3e séance**  > Étude des robots domestiques en général 
 
-- **4e séance**  > Étude du mode d'employer et des fonctions alitées, commencement de ces chaines d'information et d'énergie 
+- **4e séance**  > Étude du mode d'emploie et des fonctions alitées, commencement de ces chaines d'information et d'énergie 
 
 - **5e séance**  > Démontage du robot et finalisation des chaines d'information et d'énergie 
 
