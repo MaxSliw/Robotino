@@ -1,34 +1,52 @@
 #include <SoftwareSerial.h>
-//Moteur DC --> shield motor
-const int pwm_A = 3;
-const int pwm_B = 11;
-const int dir_A = 12;
-const int brake_A = 9;
-const int brake_B = 8;
-const int led_verif = 13;
-String voice;
+
+#define RxD         7
+#define TxD         6
+#define DEBUG_ENABLED  1
+String msg; //ou char
 //+ cs 0,1
 
-//SoftwareSerial bluetooth(7,6);
+SoftwareSerial bluetooth(RxD,TxD);
 void setup() {
   Serial.begin(9600);
   while (!Serial){
     ;
   }
-  //pinMode(led_verif, OUTPUT);
-  //pinMode(dir_A, OUTPUT);
-  //pinMode(brake_A, OUTPUT);
-  //pinMode(pwm_A, OUTPUT);
-  //bluetooth.begin(9600);
-
+  pinMode(RxD, INPUT);
+  pinMode(TxD, OUTPUT);
+  setupBlueToothConnection();
+  delay(1000);
+  Serial.flush();
+  bluetooth.flush();
 }
 
 void loop() {
   while(Serial.available()){
       delay(10);
-      voice = Serial.read();
-      if(voice.length() > 0){
-        Serial.println(voice);
+      msg = Serial.read();
+      if(msg.length() > 0){
+        Serial.write(msg);
       }
   }
+}
+
+void setupBlueToothConnection()
+{	
+	blueToothSerial.begin(9600);  
+	
+	blueToothSerial.print("AT");
+	delay(400); 
+
+	blueToothSerial.print("AT+DEFAULT"); //Reset
+	delay(2000); 
+	
+	blueToothSerial.print("AT+NAMESeeedBTSlave");  
+	delay(400);
+	
+	
+	blueToothSerial.print("AT+AUTH1"); 
+  delay(400);    
+
+  blueToothSerial.flush();
+
 }
