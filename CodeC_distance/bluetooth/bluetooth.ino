@@ -45,8 +45,6 @@ void setupBlueToothConnection()
 	
 	
 	blueToothSerial.print("AT+AUTH1"); 
-  delay(400);    
-
-  blueToothSerial.flush();
-
+	delay(400);    
+	blueToothSerial.flush();
 }
