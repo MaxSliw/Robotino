@@ -32,19 +32,19 @@ void loop() {
 
 void setupBlueToothConnection()
 {	
-	blueToothSerial.begin(9600);  
+	bluetooth.begin(9600);  
 	
-	blueToothSerial.print("AT");
+	bluetooth.print("AT");
 	delay(400); 
 
-	blueToothSerial.print("AT+DEFAULT"); //Reset
+	bluetooth.print("AT+DEFAULT"); //Reset
 	delay(2000); 
 	
-	blueToothSerial.print("AT+NAMESeeedBTSlave");  
+	bluetooth.print("AT+NAMESeeedBTSlave");  
 	delay(400);
 	
 	
-	blueToothSerial.print("AT+AUTH1"); 
+	bluetooth.print("AT+AUTH1"); 
 	delay(400);    
-	blueToothSerial.flush();
+	bluetooth.flush();
 }
