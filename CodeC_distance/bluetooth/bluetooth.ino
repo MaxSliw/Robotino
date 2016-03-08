@@ -5,9 +5,9 @@
 #define LEDON() digitalWrite(PINLED, HIGH)
 #define LEDOFF() digitalWrite(PINLED, LOW)
 #define DEBUG_ENABLED 1
+
 SoftwareSerial blueToothSerial(RxD,TxD);
-void setup()
-{
+void setup(){
   Serial.begin(9600);
   pinMode(RxD, INPUT);
   pinMode(TxD, OUTPUT);
@@ -15,22 +15,19 @@ void setup()
   LEDON();
   setupBlueToothConnection();
 }
-void loop()
-{
-  char recvChar;
+void loop(){
+  char ordre;
   while(1)
     {
     if(blueToothSerial.available())
     {
-      recvChar = blueToothSerial.read();
-      Serial.print(recvChar);
-      if(recvChar == '1')
-      {
-      LEDON();
+      ordre = blueToothSerial.read();
+      Serial.print(ordre);
+      if(ordre == 'ON'){
+        LEDON();
       }
-      else if(recvChar == '0')
-      {
-      LEDOFF();
+      else if(ordre == 'OFF'){
+        LEDOFF();
       }
   }
 }
@@ -44,9 +41,9 @@ void setupBlueToothConnection()
   delay(2000);
   blueToothSerial.print("AT+NAMERobotino"); // set the bluetooth name as "SeeedBTSlave" ,the length of bluetooth name must less than 12 characters.
   delay(400);
-  blueToothSerial.print("AT+PIN0000"); // set the pair code to connect
+  blueToothSerial.print("AT+PIN0000"); //Changement du code pin
   delay(400);
-  blueToothSerial.print("AT+AUTH1"); //
+  blueToothSerial.print("AT+AUTH1");
   delay(400);
   blueToothSerial.flush();
 }
