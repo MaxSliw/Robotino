@@ -12,6 +12,7 @@ int etat_bt_avant;
 int etat_bt_arriere;
 
 void setup() {
+  Serial.begin(9600);
   pinMode(sens, OUTPUT); //Direction du moteur
   pinMode(frein, OUTPUT); //Frein du moteur
   pinMode(bt_avant, INPUT); //Bouton pour faire avancer le robot
@@ -21,11 +22,13 @@ void setup() {
 void loop(){
   etat_bt_avant = digitalRead(bt_avant);
   etat_bt_arriere = digitalRead(bt_arriere);
-  if (etat_bt_avant == HIGH){
+    if (etat_bt_avant ==  HIGH){
+    Serial.println("avant");
     digitalWrite(sens , HIGH); 
     digitalWrite(frein, LOW);   
     analogWrite(vitesse, 255);
   }else if (etat_bt_arriere == HIGH){
+    Serial.println("arriere");
     digitalWrite(sens , LOW); 
     digitalWrite(frein, LOW);   
     analogWrite(vitesse, 255);
@@ -33,4 +36,3 @@ void loop(){
     analogWrite(vitesse, 0); 
   }
 }
-
