@@ -12,7 +12,7 @@ Serial.begin(9600);
 pinMode(RxD, INPUT);
 pinMode(TxD, OUTPUT);
 pinMode(PINLED, OUTPUT);
-LEDOFF();
+LEDON();
 setupBlueToothConnection();
 }
 void loop()
