@@ -1,50 +1,58 @@
-#include <SoftwareSerial.h>
-
-#define RxD         7
-#define TxD         6
-#define DEBUG_ENABLED  1
-String msg; //ou char
-//+ cs 0,1
-
-SoftwareSerial bluetooth(RxD,TxD);
-void setup() {
-  Serial.begin(9600);
-  while (!Serial){
-    ;
-  }
-  pinMode(RxD, INPUT);
-  pinMode(TxD, OUTPUT);
-  setupBlueToothConnection();
-  delay(1000);
-  Serial.flush();
-  bluetooth.flush();
+#include <SoftwareSerial.h> //Software Serial Port
+#define RxD 7
+#define TxD 6
+#define PINLED 9
+#define LEDON() digitalWrite(PINLED, HIGH)
+#define LEDOFF() digitalWrite(PINLED, LOW)
+#define DEBUG_ENABLED 1
+SoftwareSerial blueToothSerial(RxD,TxD);
+void setup()
+{
+Serial.begin(9600);
+pinMode(RxD, INPUT);
+pinMode(TxD, OUTPUT);
+pinMode(PINLED, OUTPUT);
+LEDOFF();
+setupBlueToothConnection();
 }
-
-void loop() {
-  while(Serial.available()){
-      delay(10);
-      msg = Serial.read();
-      if(msg.length() > 0){
-        Serial.write(msg);
-      }
-  }
+void loop()
+{
+char recvChar;
+while(1)
+{
+if(blueToothSerial.available())
+{//check if there's any data sent from the remote bluetooth shield
+recvChar = blueToothSerial.read();
+Serial.print(recvChar);
+if(recvChar == '1')
+{
+LEDON();
 }
-
+else if(recvChar == '0')
+{
+LEDOFF();
+}
+}
+}
+}
+/***************************************************************************
+* Function Name: setupBlueToothConnection
+* Description: initilizing bluetooth connction
+* Parameters:
+* Return:
+***************************************************************************/
 void setupBlueToothConnection()
-{	
-	bluetooth.begin(9600);  
-	
-	bluetooth.print("AT");
-	delay(400); 
-
-	bluetooth.print("AT+DEFAULT"); //Reset
-	delay(2000); 
-	
-	bluetooth.print("AT+NAMESeeedBTSlave");  
-	delay(400);
-	
-	
-	bluetooth.print("AT+AUTH1"); 
-	delay(400);    
-	bluetooth.flush();
+{
+blueToothSerial.begin(9600);
+blueToothSerial.print("AT");
+delay(400);
+blueToothSerial.print("AT+DEFAULT"); // Restore all setup value to factory setup
+delay(2000);
+blueToothSerial.print("AT+NAMESeeedBTSlave"); // set the bluetooth name as "SeeedBTSlave" ,the length of bluetooth name must less than 12 characters.
+delay(400);
+blueToothSerial.print("AT+PIN0000"); // set the pair code to connect
+delay(400);
+blueToothSerial.print("AT+AUTH1"); //
+delay(400);
+blueToothSerial.flush();
 }
