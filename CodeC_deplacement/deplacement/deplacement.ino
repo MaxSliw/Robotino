@@ -5,9 +5,9 @@ Projet Robotino
 *************************************************************/
 const int sens = 12;
 const int frein = 9;
-const int vitesse = 4;
+const int vitesse = 3;
 const int bt_avant = 2;
-const int bt_arriere = 3;
+const int bt_arriere = 4;
 int etat_bt_avant;
 int etat_bt_arriere;
 
@@ -35,4 +35,4 @@ void loop(){
   }else {
     analogWrite(vitesse, 0); 
   }
-}
+} 
