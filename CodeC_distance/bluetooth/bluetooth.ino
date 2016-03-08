@@ -3,48 +3,50 @@
 #define RxD         7
 #define TxD         6
 #define DEBUG_ENABLED  1
-String msg; //ou char
+#define led 9
+char msg; //ou char
 //+ cs 0,1
 
-SoftwareSerial bluetooth(RxD,TxD);
+SoftwareSerial blueToothSerial(RxD,TxD);
 void setup() {
   Serial.begin(9600);
-  while (!Serial){
-    ;
-  }
   pinMode(RxD, INPUT);
   pinMode(TxD, OUTPUT);
+  pinMode(led, OUTPUT);
   setupBlueToothConnection();
-  delay(1000);
-  Serial.flush();
-  bluetooth.flush();
 }
 
 void loop() {
-  while(Serial.available()){
-      delay(10);
-      msg = Serial.read();
-      if(msg.length() > 0){
-        Serial.write(msg);
-      }
+  char msg;
+  while(1){
+    if(blueToothSerial.available()){
+        msg = blueToothSerial.read();
+        Serial.print(msg);
+        if(msg == '0'){
+          digitalWrite(led, HIGH);
+        }else if(msg == '1'){
+           digitalWrite(led, LOW);
+        }
+        delay(10);
+    }
   }
 }
 
 void setupBlueToothConnection()
 {	
-	bluetooth.begin(9600);  
+	blueToothSerial.begin(9600);  
 	
-	bluetooth.print("AT");
+	blueToothSerial.print("AT");
 	delay(400); 
 
-	bluetooth.print("AT+DEFAULT"); //Reset
+	blueToothSerial.print("AT+DEFAULT"); //Reset
 	delay(2000); 
 	
-	bluetooth.print("AT+NAMESeeedBTSlave");  
+	blueToothSerial.print("AT+NAMESeeedBTSlave");  
 	delay(400);
 	
 	
-	bluetooth.print("AT+AUTH1"); 
+	blueToothSerial.print("AT+AUTH1"); 
 	delay(400);    
-	bluetooth.flush();
+	blueToothSerial.flush();
 }
