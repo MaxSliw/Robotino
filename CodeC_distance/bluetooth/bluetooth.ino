@@ -16,21 +16,22 @@ void setup(){
   setupBlueToothConnection();
 }
 void loop(){
-  char ordre;
+  String msg;
   while(1)
     {
-    if(blueToothSerial.available())
-    {
-      ordre = blueToothSerial.read();
-      Serial.print(ordre);
-      if(ordre == 'ON'){
-        LEDON();
+      if(blueToothSerial.available()){
+        msg = blueToothSerial.readString();
       }
-      else if(ordre == 'OFF'){
-        LEDOFF();
+      if(msg != ""){
+          Serial.println("New msg: " + msg);
+          if(msg == "Go"){
+            LEDON();
+          }else if(msg == "Stop"){
+            LEDOFF();
+          }
+          msg = "";
       }
   }
-}
 }
 void setupBlueToothConnection()
 {
@@ -47,3 +48,4 @@ void setupBlueToothConnection()
   delay(400);
   blueToothSerial.flush();
 }
+
