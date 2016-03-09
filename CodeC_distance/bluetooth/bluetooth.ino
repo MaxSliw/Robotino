@@ -23,6 +23,7 @@ void loop(){
         msg = blueToothSerial.readString();
       }
       if(msg != ""){
+          delay(10);
           Serial.println("New msg: " + msg);
           if(msg == "Go"){
             LEDON();
