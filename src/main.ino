@@ -1,4 +1,4 @@
-#include <SoftwareSerial.h> 
+#include <SoftwareSerial.h>
 #define RxD 7
 #define TxD 6
 #define PINLED 9
@@ -49,4 +49,3 @@ void setupBlueToothConnection()
   delay(400);
   blueToothSerial.flush();
 }
-
