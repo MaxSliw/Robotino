@@ -1,3 +1,8 @@
+/*************************************************************
+Commande du robot via Bluetooth
+Anthony et Paul
+Projet Robotino
+*************************************************************/
 #include <SoftwareSerial.h>
 #define RxD 7
 #define TxD 6
