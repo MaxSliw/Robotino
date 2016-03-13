@@ -1,51 +1,38 @@
-#include <SoftwareSerial.h>
-#define RxD 7
-#define TxD 6
-#define PINLED 9
-#define LEDON() digitalWrite(PINLED, HIGH)
-#define LEDOFF() digitalWrite(PINLED, LOW)
-#define DEBUG_ENABLED 1
+/*************************************************************
+Deplacement du robot
+Anthony et Paul
+Projet Robotino
+*************************************************************/
+const int sens = 12;
+const int frein = 9;
+const int vitesse = 3;
+const int bt_avant = 2;
+const int bt_arriere = 4;
+int etat_bt_avant;
+int etat_bt_arriere;
 
-SoftwareSerial blueToothSerial(RxD,TxD);
-void setup(){
+void setup() {
   Serial.begin(9600);
-  pinMode(RxD, INPUT);
-  pinMode(TxD, OUTPUT);
-  pinMode(PINLED, OUTPUT);
-  LEDON();
-  setupBlueToothConnection();
+  pinMode(sens, OUTPUT); //Direction du moteur
+  pinMode(frein, OUTPUT); //Frein du moteur
+  pinMode(bt_avant, INPUT); //Bouton pour faire avancer le robot
+  pinMode(bt_arriere, INPUT); //Bouton pour faire reculer et tourner le robot
 }
+
 void loop(){
-  String msg;
-  while(1)
-    {
-      if(blueToothSerial.available()){
-        msg = blueToothSerial.readString();
-      }
-      if(msg != ""){
-          delay(10);
-          Serial.println("New msg: " + msg);
-          if(msg == "Go"){
-            LEDON();
-          }else if(msg == "Stop"){
-            LEDOFF();
-          }
-          msg = "";
-      }
+  etat_bt_avant = digitalRead(bt_avant);
+  etat_bt_arriere = digitalRead(bt_arriere);
+    if (etat_bt_avant ==  HIGH){
+    Serial.println("avant");
+    digitalWrite(sens , HIGH);
+    digitalWrite(frein, LOW);
+    analogWrite(vitesse, 255);
+  }else if (etat_bt_arriere == HIGH){
+    Serial.println("arriere");
+    digitalWrite(sens , LOW);
+    digitalWrite(frein, LOW);
+    analogWrite(vitesse, 255);
+  }else {
+    analogWrite(vitesse, 0);
   }
-}
-void setupBlueToothConnection()
-{
-  blueToothSerial.begin(9600);
-  blueToothSerial.print("AT");
-  delay(400);
-  blueToothSerial.print("AT+DEFAULT"); // Restore all setup value to factory setup
-  delay(2000);
-  blueToothSerial.print("AT+NAMERobotino"); // set the bluetooth name as "SeeedBTSlave" ,the length of bluetooth name must less than 12 characters.
-  delay(400);
-  blueToothSerial.print("AT+PIN0000"); //Changement du code pin
-  delay(400);
-  blueToothSerial.print("AT+AUTH1");
-  delay(400);
-  blueToothSerial.flush();
 }
