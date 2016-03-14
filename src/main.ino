@@ -23,22 +23,24 @@ void setup(){
 void loop(){
   String msg;
   while(1)
-    {
-      if(blueToothSerial.available()){
-        msg = blueToothSerial.readString();
-      }
-      if(msg != ""){
-          delay(10);
-          Serial.println("New msg: " + msg);
-          if(msg == "Go"){
+  {
+    if(blueToothSerial.available()){
+      msg = blueToothSerial.readString();
+      Serial.println(msg);
+      if(msg.substring(0,1) == "1"){
+        if(msg.substring(1,2)== "9"){
+          if(msg.substring(2,3) == "1"){
             LEDON();
-          }else if(msg == "Stop"){
+          }else {
             LEDOFF();
           }
-          msg = "";
+        }
       }
+      msg = "";
+    }
   }
 }
+
 void setupBlueToothConnection()
 {
   blueToothSerial.begin(9600);
