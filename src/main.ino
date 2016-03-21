@@ -6,18 +6,23 @@
 #include <SoftwareSerial.h>
 #define RxD 7
 #define TxD 6
-#define PINLED 9
-#define LEDON() digitalWrite(PINLED, HIGH)
-#define LEDOFF() digitalWrite(PINLED, LOW)
+//#define LEDON() digitalWrite(PINLED, HIGH)
+//#define LEDOFF() digitalWrite(PINLED, LOW)
 #define DEBUG_ENABLED 1
 
 SoftwareSerial blueToothSerial(RxD,TxD);
+const int sens = 12;
+const int frein = 9;
+const int vitesse = 3;
+int etat_bt_avant;
+int etat_bt_arriere;
+
 void setup(){
   Serial.begin(115200);
   pinMode(RxD, INPUT);
   pinMode(TxD, OUTPUT);
-  pinMode(PINLED, OUTPUT);
-  LEDON();
+  pinMode(sens, OUTPUT); //Direction du moteur
+  pinMode(frein, OUTPUT); //Frein du moteur
   setupBlueToothConnection();
   blueToothSerial.setTimeout(50);
 }
@@ -27,9 +32,17 @@ void loop(){
   while(1){
     if(blueToothSerial.available()) {
       msg = blueToothSerial.readString();
-      Serial.println(msg);
+      Serial.println("Ordre: " + msg);
       if(msg.length() >= 5 && msg.substring(0,1) == "1"){
-        
+        if(msg.substring(1,3) == "m1"){
+          Serial.println("GOOOOO");
+          digitalWrite(sens , HIGH);
+          digitalWrite(frein, LOW);
+          analogWrite(vitesse, msg.substring(3,5));
+        }else if(msg.substring(1,3) == "m0"){
+          digitalWrite(frein, HIGH);
+          analogWrite(vitesse, 0);
+        }
       }
     }
   }
