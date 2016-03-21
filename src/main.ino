@@ -19,7 +19,7 @@ void setup(){
   pinMode(PINLED, OUTPUT);
   LEDON();
   setupBlueToothConnection();
-  blueToothSerial.setTimeout(10);
+  blueToothSerial.setTimeout(50);
 }
 
 void loop(){
