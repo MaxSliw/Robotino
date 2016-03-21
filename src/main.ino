@@ -28,9 +28,9 @@ void loop(){
     if(blueToothSerial.available()) {
       msg = blueToothSerial.readString();
       Serial.println(msg);
-      /*if(msg.length() >= 5 && msg.substring(0,1) == "1"){
-
-      }*/
+      if(msg.length() >= 5 && msg.substring(0,1) == "1"){
+        
+      }
     }
   }
 }
