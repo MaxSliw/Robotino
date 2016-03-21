@@ -1,7 +1,7 @@
 /*************************************************************
-Commande du robot via Bluetooth
-Anthony et Paul
-Projet Robotino
+   Commande du robot via Bluetooth
+   Anthony et Paul
+   Projet Robotino
 *************************************************************/
 #include <SoftwareSerial.h>
 #define RxD 7
@@ -19,37 +19,36 @@ void setup(){
   pinMode(PINLED, OUTPUT);
   LEDON();
   setupBlueToothConnection();
+  blueToothSerial.setTimeout(10);
 }
+
 void loop(){
-  char msg[20];
-  while(1)
-  {
-    if(blueToothSerial.available()){
-      for(int i = 0; i <= 20; i++){
-        msg[i] = blueToothSerial.read();
-      }
+  String msg;
+  while(1){
+    if(blueToothSerial.available()) {
+      msg = blueToothSerial.readString();
       Serial.println(msg);
-      msg = '\n';
       /*if(msg.length() >= 5 && msg.substring(0,1) == "1"){
 
       }*/
     }
   }
 }
+
 void setupBlueToothConnection()
 {
-    blueToothSerial.begin(9600);
-    blueToothSerial.print("AT");
-    delay(400);
-    blueToothSerial.print("AT+DEFAULT");
-    delay(2000);
-    blueToothSerial.print("AT+NAMERobotino");
-    delay(400);
-    blueToothSerial.print("AT+UART115200,1,0");
-    delay(400);
-    blueToothSerial.print("AT+AUTH1");
-    //blueToothSerial.print("AT+BAUD8");
-    delay(400);
-    blueToothSerial.flush();
+  blueToothSerial.begin(9600);
+        blueToothSerial.print("AT");
+        delay(400);
+        blueToothSerial.print("AT+DEFAULT");
+        delay(2000);
+        blueToothSerial.print("AT+NAMERobotino");
+        delay(400);
+        blueToothSerial.print("AT+UART115200,1,0");
+        delay(400);
+        blueToothSerial.print("AT+AUTH1");
+        //blueToothSerial.print("AT+BAUD8");
+        delay(400);
+        blueToothSerial.flush();
 
 }
