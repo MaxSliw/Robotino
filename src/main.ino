@@ -14,8 +14,6 @@ SoftwareSerial blueToothSerial(RxD,TxD);
 const int sens = 12;
 const int frein = 9;
 const int vitesse = 3;
-int etat_bt_avant;
-int etat_bt_arriere;
 
 void setup(){
   Serial.begin(115200);
@@ -35,13 +33,19 @@ void loop(){
       Serial.println("Ordre: " + msg);
       if(msg.length() >= 5 && msg.substring(0,1) == "1"){
         if(msg.substring(1,3) == "m1"){
-          Serial.println("GOOOOO");
+          Serial.println("Avant");
           digitalWrite(sens , HIGH);
           digitalWrite(frein, LOW);
           analogWrite(vitesse, msg.substring(3,5));
         }else if(msg.substring(1,3) == "m0"){
+          Serial.println("Arret");
           digitalWrite(frein, HIGH);
           analogWrite(vitesse, 0);
+        }else if(msg.substring(1,3) == "m2"){
+          Serial.println("derriere");
+          digitalWrite(sens , LOW);
+          digitalWrite(frein, LOW);
+          analogWrite(vitesse, msg.substring(3,5));
         }
       }
     }
@@ -50,14 +54,14 @@ void loop(){
 
 void setupBlueToothConnection()
 {
-  blueToothSerial.begin(9600);
+        blueToothSerial.begin(9600);
         blueToothSerial.print("AT");
         delay(400);
         blueToothSerial.print("AT+DEFAULT");
         delay(2000);
         blueToothSerial.print("AT+NAMERobotino");
         delay(400);
-        blueToothSerial.print("AT+UART115200,1,0");
+        blueToothSerial.print("AT+UART115200");
         delay(400);
         blueToothSerial.print("AT+AUTH1");
         //blueToothSerial.print("AT+BAUD8");
