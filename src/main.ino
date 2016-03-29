@@ -9,14 +9,14 @@ const int vitesse = 3;
 const int bt_avant = 2;
 const int bt_arriere = 4;
 const int captor_echo = 11;
-const int captor_trig = 13;
+const int captor_trig = 8;
 int etat_bt_avant;
 int etat_bt_arriere;
 
 void setup() {
   Serial.begin(9600);
   pinMode(captor_trig, OUTPUT);
-  pinMode(captor_trig, INPUT);
+  pinMode(captor_echo, INPUT);
   digitalWrite(captor_trig, LOW);
   pinMode(sens, OUTPUT); //Direction du moteur
   pinMode(frein, OUTPUT); //Frein du moteur
