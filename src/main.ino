@@ -8,11 +8,16 @@ const int frein = 9;
 const int vitesse = 3;
 const int bt_avant = 2;
 const int bt_arriere = 4;
+const int captor_echo = 11;
+const int captor_trig = 13;
 int etat_bt_avant;
 int etat_bt_arriere;
 
 void setup() {
   Serial.begin(9600);
+  pinMode(captor_trig, OUTPUT);
+  pinMode(captor_trig, INPUT);
+  digitalWrite(captor_trig, LOW);
   pinMode(sens, OUTPUT); //Direction du moteur
   pinMode(frein, OUTPUT); //Frein du moteur
   pinMode(bt_avant, INPUT); //Bouton pour faire avancer le robot
@@ -20,6 +25,11 @@ void setup() {
 }
 
 void loop(){
+  digitalWrite(captor_trig, HIGH);
+  delay(20);
+  digitalWrite(captor_trig, LOW);
+  unsigned long duree = pulseIn(captor_echo, HIGH);
+  Serial.println(duree);
   etat_bt_avant = digitalRead(bt_avant);
   etat_bt_arriere = digitalRead(bt_arriere);
     if (etat_bt_avant ==  HIGH){
