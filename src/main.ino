@@ -4,13 +4,17 @@
    Projet Robotino
 *************************************************************/
 #include <SoftwareSerial.h>
+#include <NewPing.h>
 #define RxD 7
 #define TxD 6
-//#define LEDON() digitalWrite(PINLED, HIGH)
-//#define LEDOFF() digitalWrite(PINLED, LOW)
+#define TRIGGER_PIN 5
+#define ECHO_PIN 4
+
 #define DEBUG_ENABLED 1
+#define MAX_DISTANCE 200
 
 SoftwareSerial blueToothSerial(RxD,TxD);
+NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE);
 const int sens = 12;
 const int frein = 9;
 const int vitesse = 3;
@@ -27,7 +31,10 @@ void setup(){
 
 void loop(){
   String msg;
+  unsigned int uS_cm;
   while(1){
+    uS_cm = sonar.ping_cm();
+    Serial.println();
     if(blueToothSerial.available()) {
       msg = blueToothSerial.readString();
       Serial.println("Ordre: " + msg);
