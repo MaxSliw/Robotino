@@ -34,7 +34,7 @@ void loop(){
   unsigned int uS_cm;
   while(1){
     uS_cm = sonar.ping_cm();
-    Serial.println();
+    Serial.println(uS_cm);
     if(blueToothSerial.available()) {
       msg = blueToothSerial.readString();
       Serial.println("Ordre: " + msg);
@@ -43,7 +43,8 @@ void loop(){
           Serial.println("Avant");
           digitalWrite(sens , HIGH);
           digitalWrite(frein, LOW);
-          analogWrite(vitesse, msg.substring(3,5));
+          vit = msg.substring(3,6).toInt();
+          analogWrite(vitesse, vit);
         }else if(msg.substring(1,3) == "m0"){
           Serial.println("Arret");
           digitalWrite(frein, HIGH);
@@ -52,7 +53,8 @@ void loop(){
           Serial.println("derriere");
           digitalWrite(sens , LOW);
           digitalWrite(frein, LOW);
-          analogWrite(vitesse, msg.substring(3,5));
+          vit = msg.substring(3,6).toInt();
+          analogWrite(vitesse, vit);
         }
       }
     }
