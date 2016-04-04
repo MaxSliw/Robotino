@@ -26,7 +26,7 @@ void setup() {
 
 void loop(){
   digitalWrite(captor_trig, HIGH);
-  delay(20);
+  delay(500);
   digitalWrite(captor_trig, LOW);
   unsigned long duree = pulseIn(captor_echo, HIGH);
   Serial.println(duree);
@@ -42,7 +42,12 @@ void loop(){
     digitalWrite(sens , LOW);
     digitalWrite(frein, LOW);
     analogWrite(vitesse, 255);
-  }else {
+  }
+  if (duree < 800) {
     analogWrite(vitesse, 0);
   }
+  if (duree > 800) {
+    analogWrite(vitesse, 255) ;
+  }
+  
 }
