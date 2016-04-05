@@ -9,15 +9,14 @@
 #define TxD 6
 #define TRIGGER_PIN 5
 #define ECHO_PIN 4
-
+#define sens 12
+#define frein 9
+#define vitesse 3
 #define DEBUG_ENABLED 1
 #define MAX_DISTANCE 200
 
 SoftwareSerial blueToothSerial(RxD,TxD);
 NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE);
-const int sens = 12;
-const int frein = 9;
-const int vitesse = 3;
 
 void setup(){
   Serial.begin(115200);
