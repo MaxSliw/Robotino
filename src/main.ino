@@ -57,10 +57,13 @@ void loop(){
         }
       }
     }
+    if(Serial.available()){
+      blueToothSerial.print(Serial.read());
+    }
   }
 }
 
-void setupBlueToothConnection()
+/*void setupBlueToothConnection()
 {
         blueToothSerial.begin(9600);
         blueToothSerial.print("AT");
@@ -76,4 +79,4 @@ void setupBlueToothConnection()
         delay(400);
         blueToothSerial.flush();
 
-}
+}*/
