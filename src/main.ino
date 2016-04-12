@@ -3,30 +3,30 @@
    Anthony et Paul
    Projet Robotino
 *************************************************************/
-#include <SoftwareSerial.h>
-#include <NewPing.h>
+#include <SoftwareSerial.h> //Librairie pour communication série
+#include <NewPing.h> //Librairie pour le capteur télémètre à ultrason
 #define RxD 7
 #define TxD 6
 #define TRIGGER_PIN 5
 #define ECHO_PIN 4
+#define MAX_DISTANCE 200
 #define sens 12
 #define frein 9
-#define vitesse 3 //max 60
+#define vitesse 3 //Vit min du moteur -> 60 / Vit max -> 255 
 #define DEBUG_ENABLED 1
-#define MAX_DISTANCE 200
 
-SoftwareSerial blueToothSerial(RxD,TxD);
-NewPing captor(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE);
+SoftwareSerial blueToothSerial(RxD,TxD); //Définition des pins RxD et TxD de la liaison série voulu
+NewPing captor(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE); //Définition des pins TRIGGER et ECHO du capteur et de la distance max(delay)
 
 void setup(){
-  Serial.begin(57600);
-  pinMode(RxD, INPUT);
-  pinMode(TxD, OUTPUT);
+  Serial.begin(115200); //Initialisation de liaison série entre l'ordinateur et l'Arduino (moniteur) à 115200 bits/seconde
+  pinMode(RxD, INPUT); //RxD -> entrée (R = receive)
+  pinMode(TxD, OUTPUT); //TxD -> sortie (T = transmission)
   pinMode(sens, OUTPUT); //Direction du moteur
   pinMode(frein, OUTPUT); //Frein du moteur
-  setupBlueToothConnection();
-  blueToothSerial.setTimeout(50);
-
+  pinMode(vitesse, OUTPUT); //Vitesse du moteur de 0 à 255 (PWM)
+  setupBlueToothConnection(); //Configuration module Bluetooth
+  blueToothSerial.setTimeout(60);
 }
 
 void loop(){
