@@ -33,6 +33,8 @@ void loop(){
           msg = "";
       }
   }
+int sensorValue = analogRead(A3);
+float voltage = sensorValue * (5.0 / 1023.0);
 }
 void setupBlueToothConnection()
 {
