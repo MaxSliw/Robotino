@@ -26,13 +26,14 @@ void setup(){
   pinMode(sens, OUTPUT); //Direction du moteur
   pinMode(frein, OUTPUT); //Frein du moteur
   pinMode(vitesse, OUTPUT); //Vitesse du moteur de 0 à 255 (PWM)
-  pinMode(analog_sim, OUTPUT);
+  pinMode(analog_sim, INPUT);
   setupBlueToothConnection(); //Configuration module Bluetooth
   blueToothSerial.setTimeout(60);
 }
 
 void loop(){
   int value_anal;
+  int dist_cm;
   String msg;
   unsigned int uS_cm;
   int vit;
@@ -40,7 +41,7 @@ void loop(){
     dist_cm = captor.ping_cm();
     delay(60);
     value_anal = analogRead(analog_sim);
-    Serial.println(dist_cm);
+    blueToothSerial.println(value_anal);
     if(blueToothSerial.available()) {
       msg = blueToothSerial.readString();
       Serial.println("Ordre: " + msg);
