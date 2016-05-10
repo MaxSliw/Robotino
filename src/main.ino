@@ -13,6 +13,7 @@
 #define sens 12
 #define frein 9
 #define vitesse 3 //Vit min du moteur -> 60 / Vit max -> 255 
+#define analog_sim A3
 #define DEBUG_ENABLED 1
 
 SoftwareSerial blueToothSerial(RxD,TxD); //Définition des pins RxD et TxD de la liaison série voulu
@@ -25,18 +26,21 @@ void setup(){
   pinMode(sens, OUTPUT); //Direction du moteur
   pinMode(frein, OUTPUT); //Frein du moteur
   pinMode(vitesse, OUTPUT); //Vitesse du moteur de 0 à 255 (PWM)
+  pinMode(analog_sim, OUTPUT);
   setupBlueToothConnection(); //Configuration module Bluetooth
   blueToothSerial.setTimeout(60);
 }
 
 void loop(){
+  int value_anal;
   String msg;
   unsigned int uS_cm;
   int vit;
   while(1){
     dist_cm = captor.ping_cm();
     delay(60);
-    //Serial.println(dist_cm);
+    value_anal = analogRead(analog_sim);
+    Serial.println(dist_cm);
     if(blueToothSerial.available()) {
       msg = blueToothSerial.readString();
       Serial.println("Ordre: " + msg);
