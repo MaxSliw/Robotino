@@ -32,3 +32,5 @@ void setup {
 - **15e séance**  > Explication et rédaction du projet. Mise en ligne de l'application
 
 - **16e séance**  > Analyse, dévellopement durable, empreinte carbonne...
+
+- **17e séance**  > Finition et création du dossier
