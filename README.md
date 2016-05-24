@@ -2,7 +2,7 @@
 ``` C
 void setup {
   Serial.begin(02/01/2016);
-  Serial.print("Mon carnet de bord pour les profs de SIN");
+  Serial.print("Mon carnet de bord");
 }
 ```
 - **1er séance** > Découverte du projet
@@ -20,3 +20,15 @@ void setup {
 - **7e séance**  > Fin de l'analyse et début du prototypage 
 
 - **8e séance**  > Programmation C sur Arduino pour la commande des moteurs
+
+- **9e séance**  > Programmation C et début de l'application Android
+
+- **10e séance**  > Programmation C et dévellopement de l'application
+
+- **12e séance**  > Ajout d'un capteur de distance
+
+- **14e séance**  > Programmation C et mesure
+
+- **15e séance**  > Explication et rédaction du projet. Mise en ligne de l'application
+
+- **16e séance**  > Analyse, dévellopement durable, empreinte carbonne...
